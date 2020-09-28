@@ -115,7 +115,7 @@ graph_add(player.current_room)
 # Track visited rooms
 visited = set()
 visited.add(player.current_room.id)
-
+counter_start = 0
 # Iterate over graph while rooms visited is not equal to length room graph
 while len(visited) != len(room_graph):
 
@@ -125,7 +125,12 @@ while len(visited) != len(room_graph):
 
     # Iterate over key in current room saved in graph
     for x in graph[player.current_room.id]:
-        
+
+        # Start by going east
+        if counter_start == 0:
+            x = "e"
+            counter_start+=1
+
         # Logging
         print("Current Room:",player.current_room.id,"Current Direction:", x)
         print("Current Room Keys:", graph[player.current_room.id])
@@ -136,7 +141,7 @@ while len(visited) != len(room_graph):
         if x not in graph[player.current_room.id].keys():
             continue
 
-        # If direction value is ? then go that direction
+        # If direction value is ? then go that direction if not in visited
         elif (graph[player.current_room.id][x] == "?") and (find_room(x, player.current_room) not in visited):
             dft_recursive(x)
             print("Enter dft")
